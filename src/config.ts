@@ -13,15 +13,15 @@ const database = {
   dbName,
   host,
   dialect,
-  logging: false
+  logging: false,
 };
 const frontHost = process.env.FRONT_HOST;
-const port = process.env.PORT;
+const port = +process.env.PORT;
 const tokenKey = process.env.TOKENKEY;
 // const saltRounds = +process.env.SALTROUNDS;
 // const expiresIn = +process.env.EXPIRESIN;
 
-export default {
+const config = {
   database,
   frontHost,
   port,
@@ -29,3 +29,5 @@ export default {
   // saltRounds,
   // expiresIn
 };
+
+export default config;

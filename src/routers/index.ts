@@ -1,10 +1,8 @@
-import { Express } from 'express';
-
-const authorizationRouter = require('./authRouter');
-const booksRouter = require('./booksRouter');
-const userRouter = require('./userRouter');
+import type { Express } from 'express';
+import authorizationRouter from './authRouter';
 
 export default (app: Express) => {
+  app.use('/main', authorizationRouter);
   // app.use('/main', booksRouter);
   // app.use('/auth', authorizationRouter);
   // app.use('/user', userRouter);

@@ -1,8 +1,8 @@
-export interface CustomPayload {
-    statusCode: number,
-    message: string,
-  }
+export interface ICustomPayload {
+  statusCode: number;
+  message: string;
+}
 
-export interface Err extends Error {
-    customPayload: CustomPayload; 
+export interface IErr extends Error {
+  customPayload: ICustomPayload;
 }
