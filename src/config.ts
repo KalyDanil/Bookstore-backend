@@ -18,16 +18,16 @@ const database = {
 const frontHost = process.env.FRONT_HOST;
 const port = +process.env.PORT;
 const tokenKey = process.env.TOKENKEY;
-// const saltRounds = +process.env.SALTROUNDS;
-// const expiresIn = +process.env.EXPIRESIN;
+const saltRounds = +process.env.SALTROUNDS;
+const expiresIn = +process.env.EXPIRESIN;
 
 const config = {
   database,
   frontHost,
   port,
   tokenKey,
-  // saltRounds,
-  // expiresIn
+  saltRounds,
+  expiresIn
 };
 
 export default config;

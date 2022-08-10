@@ -1,23 +1,13 @@
 import express from 'express';
-import type { Response, Request, NextFunction } from 'express';
-import { AppDataSource } from '../database/dataSource';
-import { Usery } from '../database/entity/Usery';
+import { tokenVerify } from '../middlewares/tokenVerify';
+import authController from '../controllers/authController';
 
 const authorizationRouter = express.Router();
 
-const makeComment = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const user1 = await AppDataSource.getRepository(Usery).findOneBy({
-      id: 1,
-  })
+authorizationRouter.post('/registration', authController.registration);
 
-  
-  user1.firstName = "Saw"
-await AppDataSource.getRepository(Usery).save(user1)
+authorizationRouter.get('/authorization', authController.authorization);
 
-  res.json(user1.firstName);
-  } catch (err) { next(err); }
-};
-authorizationRouter.get('/book', makeComment);
+authorizationRouter.get('/authorizationByToken', tokenVerify, authController.authorizationByToken);
 
 export default authorizationRouter;
