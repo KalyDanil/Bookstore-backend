@@ -16,6 +16,6 @@ export class Users {
     password: string
 
     @Column()
-    avatar: string = 'profileLink.svg'
+    avatar: string 
 
 }
