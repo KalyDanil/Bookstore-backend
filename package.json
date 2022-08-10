@@ -9,8 +9,8 @@
     "scripts": {
         "start": "cross-env node src/server.ts",
         "test": "cross-env swagger project test",
-        "typeorm-cli": "ts-node node_modules/typeorm/cli.js --dataSource src/db/utils/dataSource.ts",
-        "db:sync": "npm run typeorm-cli -- migration:generate -p src/db/migrations/sync",
+        "typeorm-cli": "ts-node node_modules/typeorm/cli.js --dataSource src/database/dataSource.ts",
+        "db:sync": "npm run typeorm-cli -- migration:generate -p src/database/migrations/sync",
         "db:migrate:up": "npm run typeorm-cli -- migration:run",
         "db:migrate:down": "npm run typeorm-cli -- migration:revert"
     },
