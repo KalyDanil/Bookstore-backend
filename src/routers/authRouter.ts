@@ -8,6 +8,6 @@ authorizationRouter.post('/registration', authController.registration);
 
 authorizationRouter.get('/authorization', authController.authorization);
 
-authorizationRouter.get('/authorizationByToken', tokenVerify, authController.authorizationByToken);
+authorizationRouter.get('/authorization-by-token', tokenVerify, authController.authorizationByToken);
 
 export default authorizationRouter;
