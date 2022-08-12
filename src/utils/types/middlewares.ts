@@ -6,3 +6,8 @@ export interface ICustomPayload {
 export interface IErr extends Error {
   customPayload: ICustomPayload;
 }
+
+export interface IShemaParameters {
+  email: string;
+  password: string;
+}

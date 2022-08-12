@@ -1,12 +1,11 @@
-import { NextFunction, Response } from 'express';
+import type { NextFunction, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { AppDataSource } from '../database/dataSource';
-import { Users } from '../database/entity/Users';
+import { UsersRep } from '../database/getReps';
 import createError from '../utils/functions/errCreater';
 import { jwtVerify } from '../utils/functions/jwt';
-import { IJwtVerify, IUserAuthInfoRequest } from '../utils/types/req';
+import type { IUserAuthRequest } from '../utils/types/req';
 
-export const tokenVerify = async (req: IUserAuthInfoRequest, res: Response, next: NextFunction) => {
+export const tokenVerify = async (req: IUserAuthRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
 
@@ -16,21 +15,14 @@ export const tokenVerify = async (req: IUserAuthInfoRequest, res: Response, next
         'Log in.',
       );
     }
-   
-    const decoded: IJwtVerify = jwtVerify(token);
-    console.log(decoded.id)
-    const user = await AppDataSource.getRepository(Users).findOne({
-      select: {
-        id: true,
-        fullName: true,
-        email: true,
-        avatar: true
-      },
+
+    const decoded = jwtVerify(token);
+    const user = await UsersRep.findOne({
       where: {
-          id: decoded.id,
+        id: decoded.id,
       },
     });
-    
+
     if (!user) {
       throw createError(
         StatusCodes.NOT_FOUND,
@@ -38,6 +30,6 @@ export const tokenVerify = async (req: IUserAuthInfoRequest, res: Response, next
       );
     }
     req.user = user;
-    next(); 
+    next();
   } catch (err) { next(err); }
-}
+};

@@ -1,34 +1,34 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm'; 
-@Entity() 
-export class Books { 
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-   @PrimaryGeneratedColumn() 
-   id: number; 
-   
-   @Column() 
+@Entity()
+export class Books {
+  @PrimaryGeneratedColumn()
+   id: number;
+
+  @Column({ nullable: false, type: 'character varying' })
    name: string;
-   
-   @Column() 
-   authorname: string;
-   
-   @Column("text") 
-   description: string; 
 
-   @Column('float') 
+  @Column({ nullable: false, type: 'text' })
+   authorName: string;
+
+  @Column({ nullable: false, type: 'text' })
+   description: string;
+
+  @Column({ nullable: false, type: 'float' })
    paperBackPrice: number;
-   
-   @Column('float') 
+
+  @Column({ nullable: false, type: 'float' })
    price: number;
-   
-   @Column() 
-   dateofissue: string;
-   
-   @Column() 
+
+  @Column({ nullable: false, type: 'character varying' })
+   dateOfIssue: string;
+
+  @Column({ nullable: false, type: 'number' })
    rating: number;
-   
-   @Column() 
+
+  @Column({ nullable: false, type: 'character varying' })
    cover: string;
-   
-   @Column() 
-   status: string; 
+
+  @Column({ nullable: false, type: 'character varying' })
+   status: string;
 }
