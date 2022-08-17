@@ -13,13 +13,6 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
       email,
       password,
     } = req.body;
-    if (!email && !password) {
-      throw createError(
-        StatusCodes.BAD_REQUEST,
-        'Missing required body parameters',
-      );
-    }
-
     const user0 = new Users();
     user0.email = email;
     user0.password = passwordHash(password);
@@ -32,7 +25,7 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
     if (err.message === 'duplicate key value violates unique constraint "UQ_97672ac88f789774dd47f7c8be3"') {
       next(createError(
         StatusCodes.BAD_REQUEST,
-        'This email is already taken',
+        [{email: 'This email is already taken'}],
       ));
     }
     next(err);

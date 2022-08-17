@@ -13,13 +13,6 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
       password,
     } = req.body;
 
-    if (!email && !password) {
-      throw createError(
-        StatusCodes.BAD_REQUEST,
-        'Missing required body parameters',
-      );
-    }
-
     const user = await dbReps.Users.findOne({
       select: {
         id: true,
@@ -41,7 +34,10 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
 
     throw createError(
       StatusCodes.BAD_REQUEST,
-      'Wrong email or password',
+      [
+        {password: 'wrong email or password'},
+        {email: 'wrong email or password'},
+      ],
     );
   } catch (err) { next(err); }
 };

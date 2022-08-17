@@ -10,13 +10,6 @@ export const editInfo = async (req: IReqUser, res: Response, next: NextFunction)
       email,
       fullName,
     } = req.body;
-    if (!email && !fullName) {
-      throw createError(
-        StatusCodes.BAD_REQUEST,
-        'Missing required query parameters',
-      );
-    }
-
     const id = req.user.id;
     const user = await dbReps.Users.findOneBy({
       id,
@@ -29,7 +22,7 @@ export const editInfo = async (req: IReqUser, res: Response, next: NextFunction)
     if (err.message === 'duplicate key value violates unique constraint "UQ_97672ac88f789774dd47f7c8be3"') {
       next(createError(
         StatusCodes.NOT_ACCEPTABLE,
-        'This email is already taken',
+        [{email: 'This email is already taken'}],
       ));
     }
     next(err);

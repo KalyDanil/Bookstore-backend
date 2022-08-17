@@ -1,6 +1,6 @@
-import type { IErr } from '../types/middlewares';
+import type { IErr, IErrMessage } from '../types/middlewares';
 
-const createError = (statusCode: number, message: string) => {
+const createError = (statusCode: number, message: string | IErrMessage) => {
   const err = new Error('') as IErr;
   err.customPayload = {
     statusCode,

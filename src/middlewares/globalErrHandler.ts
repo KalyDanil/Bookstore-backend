@@ -5,7 +5,7 @@ import type { IErr } from '../types/middlewares';
 export default (err: IErr, req: Request, res: Response, next: NextFunction) => {
   if (err.customPayload) {
     console.log(err.customPayload.message);
-    return res.status(err.customPayload.statusCode).json(err.customPayload.message);
+    return res.status(err.customPayload.statusCode).send(err.customPayload.message);
   }
   console.log(err.message);
   return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);

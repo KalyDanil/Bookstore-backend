@@ -4,13 +4,13 @@ import { registration } from '../controllers/authController/registration';
 import { authorization } from '../controllers/authController/authorization';
 import { authorizationByToken } from '../controllers/authController/byToken';
 import { createValidationMiddleware } from '../middlewares/createValidationMiddleware';
-import { yupValidationShape } from '../utils/schemas';
+import { registrationShape, authorizationShape } from '../utils/schemas';
 
 const authorizationRouter = express.Router();
 
-authorizationRouter.post('/registration', createValidationMiddleware(yupValidationShape), registration);
+authorizationRouter.post('/registration', createValidationMiddleware(registrationShape), registration);
 
-authorizationRouter.post('/authorization', authorization);
+authorizationRouter.post('/authorization', createValidationMiddleware(authorizationShape), authorization);
 
 authorizationRouter.get('/authorization-by-token', tokenVerify, authorizationByToken);
 

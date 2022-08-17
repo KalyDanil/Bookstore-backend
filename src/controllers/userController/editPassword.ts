@@ -11,14 +11,6 @@ export const editPassword = async (req: IReqUser, res: Response, next: NextFunct
       oldPassword,
       password,
     } = req.body;
-
-    if (!oldPassword && !password) {
-      throw createError(
-        StatusCodes.BAD_REQUEST,
-        'Missing required query parameters',
-      );
-    }
-
     const user = await dbReps.Users.findOne({
       select: {
         id: true,
@@ -35,7 +27,7 @@ export const editPassword = async (req: IReqUser, res: Response, next: NextFunct
     if (!passwordVerify(oldPassword, user.password)) {
       throw createError(
         StatusCodes.NOT_FOUND,
-        'Wrong old password.',
+        [{password: 'wrong old password'}],
       );
     }
 
