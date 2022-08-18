@@ -35,8 +35,8 @@ export const authorization = async (req: Request, res: Response, next: NextFunct
     throw createError(
       StatusCodes.BAD_REQUEST,
       [
-        {password: 'wrong email or password'},
-        {email: 'wrong email or password'},
+        { password: 'wrong email or password' },
+        { email: 'wrong email or password' },
       ],
     );
   } catch (err) { next(err); }

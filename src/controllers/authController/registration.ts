@@ -25,7 +25,7 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
     if (err.message === 'duplicate key value violates unique constraint "UQ_97672ac88f789774dd47f7c8be3"') {
       next(createError(
         StatusCodes.BAD_REQUEST,
-        [{email: 'This email is already taken'}],
+        [{ email: 'This email is already taken' }],
       ));
     }
     next(err);

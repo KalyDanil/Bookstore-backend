@@ -1,15 +1,13 @@
-import { type } from 'os';
-
 export interface ICustomPayload {
   statusCode: number;
-  message: string | IErrMessage;
+  message: string | ErrMessageType;
 }
 
 export interface IErr extends Error {
   customPayload: ICustomPayload;
 }
 
-export type IErrMessage = Array<object>;
+export type ErrMessageType = Array<object>;
 
 export interface IShemaParameters {
   fullName?: string;

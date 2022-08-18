@@ -27,7 +27,7 @@ export const editPassword = async (req: IReqUser, res: Response, next: NextFunct
     if (!passwordVerify(oldPassword, user.password)) {
       throw createError(
         StatusCodes.NOT_FOUND,
-        [{password: 'wrong old password'}],
+        [{ password: 'wrong old password' }],
       );
     }
 
