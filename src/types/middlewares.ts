@@ -1,13 +1,21 @@
+export type PathErrType = 'body' | 'query' | 'params' | 'headers';
+
+export interface IErrObject {
+  path: PathErrType;
+  key: string;
+  message: string;
+}
+
+export type ErrDataType = Array<IErrObject>;
+
 export interface ICustomPayload {
-  statusCode: number;
-  message: string | ErrMessageType;
+  message: string;
+  data: ErrDataType;
 }
 
 export interface IErr extends Error {
   customPayload: ICustomPayload;
 }
-
-export type ErrMessageType = Array<object>;
 
 export interface IShemaParameters {
   fullName?: string;

@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { BookRatings } from './BookRatings';
+import { CartBooks } from './CartBooks';
+import { Comments } from './Comments';
+import { Genres } from './Genres';
+import { LikedBooks } from './LikedBooks';
 
 @Entity()
 export class Books {
@@ -23,7 +28,7 @@ export class Books {
   @Column({ nullable: false, type: 'varchar' })
    dateOfIssue: string;
 
-  @Column({ nullable: false, type: 'number' })
+  @Column({ nullable: true, type: 'integer' })
    rating: number;
 
   @Column({ nullable: false, type: 'varchar' })
@@ -31,4 +36,20 @@ export class Books {
 
   @Column({ nullable: false, type: 'varchar' })
    status: string;
+
+  @ManyToMany(() => Genres, (genre) => genre.books)
+  @JoinTable()
+    genres: Genres[];
+
+  @OneToMany(() => BookRatings, (bookRating) => bookRating.book)
+  public bookRatings!: BookRatings[];
+
+  @OneToMany(() => LikedBooks, (likedBook) => likedBook.book)
+  public likedBooks!: LikedBooks[];
+
+  @OneToMany(() => CartBooks, (cartBook) => cartBook.book)
+  public cartBooks!: CartBooks[];
+
+  @OneToMany(() => Comments, (comment) => comment.book)
+    comments: Comments[];
 }

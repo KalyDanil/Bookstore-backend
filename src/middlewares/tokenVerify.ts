@@ -1,17 +1,20 @@
 import type { NextFunction, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
+import { ReasonPhrases } from 'http-status-codes';
 import { dbReps } from '../database/dataSource';
-import createError from '../utils/errCreator';
+import { createError } from '../utils/errCreator';
 import { jwtVerify } from '../utils/jwt';
 import type { IReqUser } from '../types/req';
+import { errObjCreator } from '../utils/errObjCreator';
 
 export const tokenVerify = async (req: IReqUser, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
       throw createError(
-        StatusCodes.UNAUTHORIZED,
-        'Log in.',
+        ReasonPhrases.UNAUTHORIZED,
+        [
+          errObjCreator('headers', 'token', 'Log in'),
+        ],
       );
     }
 
@@ -24,11 +27,31 @@ export const tokenVerify = async (req: IReqUser, res: Response, next: NextFuncti
 
     if (!user) {
       throw createError(
-        StatusCodes.NOT_FOUND,
-        'User is not found',
+        ReasonPhrases.NOT_FOUND,
+        [
+          errObjCreator('headers', 'user', 'User is not found'),
+        ],
       );
     }
     req.user = user;
     next();
-  } catch (err) { next(err); }
+  } catch (err) {
+    if (err.message === 'invalid signature') {
+      next(createError(
+        ReasonPhrases.BAD_REQUEST,
+        [
+          errObjCreator('headers', 'token', 'Token is not valid'),
+        ],
+      ));
+    }
+    if (err.message === 'jwt expired') {
+      next(createError(
+        ReasonPhrases.BAD_REQUEST,
+        [
+          errObjCreator('headers', 'token', 'Session expired'),
+        ],
+      ));
+    }
+    next(err);
+  }
 };
